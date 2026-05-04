@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LSB · Steganography Visualizer</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header>
+  <h1 data-i18n="header.title">LSB · Steganography Visualizer</h1>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="header-hint" data-i18n="header.hint">Click any pixel on the left to change its color</span>
+    <select class="lang-select" id="selLang">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="cg">
+    <label data-i18n="ctrl.pixels">Pixels</label>
+    <input type="range" id="slPixels" min="1" max="64" value="6">
+    <span class="val-badge" id="lblPixels">6</span>
+  </div>
+
+  <div class="cg">
+    <label data-i18n="ctrl.channels">Channels</label>
+    <div class="ch-btns">
+      <button class="ch-btn on-r" data-ch="r">R</button>
+      <button class="ch-btn on-g" data-ch="g">G</button>
+      <button class="ch-btn on-b" data-ch="b">B</button>
+    </div>
+  </div>
+
+  <div class="cg">
+    <label data-i18n="ctrl.message">Message</label>
+    <input type="text" id="inpMsg" value="Hello" maxlength="200" spellcheck="false"
+           data-i18n-placeholder="ctrl.msg.placeholder"
+           placeholder="Type the secret message...">
+  </div>
+
+  <div class="cg">
+    <label data-i18n="ctrl.animation">Animation</label>
+    <input type="range" id="slAnim" min="0" max="5" value="0">
+    <span class="val-badge" id="lblAnim">Paused</span>
+  </div>
+
+  <button class="btn" id="btnRand">⟳ <span data-i18n="ctrl.randomize">Randomize colors</span></button>
+</div>
+
+<div class="legend">
+  <div class="li"><span class="lb plain">0</span><span data-i18n="legend.normal">Normal bit</span></div>
+  <div class="li"><span class="lb avail">1</span><span data-i18n="legend.avail">Available LSB (original)</span></div>
+  <div class="li"><span class="lb change">0</span><span data-i18n="legend.changed">LSB replaced by message bit</span></div>
+  <div class="li"><span class="lb same">1</span><span data-i18n="legend.same">LSB matches message bit (no change)</span></div>
+</div>
+
+<div class="main">
+  <div class="panel">
+    <div class="panel-head">
+      <span class="panel-title" data-i18n="panel.orig.title">Original Image</span>
+      <span class="panel-sub"   data-i18n="panel.orig.sub">Click a pixel to set its color</span>
+    </div>
+    <div class="px-grid" id="origGrid"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <span class="panel-title" data-i18n="panel.steg.title">Steganographed Image</span>
+      <span class="panel-sub"   data-i18n="panel.steg.sub">LSBs replaced with message bits</span>
+    </div>
+    <div class="px-grid" id="stegGrid"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-title" data-i18n="footer.title">Message bits → embedding flow</div>
+  <div class="msg-flow" id="msgFlow"></div>
+  <div class="stats-row" id="statsRow"></div>
+  <div class="cap-bar"><div class="cap-fill" id="capFill"></div></div>
+  <div class="decoded">
+    <div class="dec-lbl" data-i18n="decoded.label">Message decoded from steganographed image</div>
+    <div class="dec-out" id="decOut">—</div>
+  </div>
+</footer>
+
+<script src="js/i18n.js"></script>
+<script src="js/lsb.js"></script>
+</body>
+</html>
